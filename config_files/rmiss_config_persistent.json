@@ -1,0 +1,22 @@
+{
+  "initial_generators": [{"class":  "FromFile", "type": "ClaudeFewShot", "path": "sync_data", "n_per_evidence": 4, "active": true}],
+  "inloop_generators": [],
+  "mutations":
+    [{"class":  "LLMFillInTheGapsMutation" ,"n_mutations": 3, "model_name": "claude3-haiku", "batch_size": 10,
+      "temperature": 1.0, "mask_output_perc": 0.2, "connected": true, "n_multiply": 2, "n_threads": 6,
+      "preserve_meaning": true, "entail_model": "tasksource", "active": true, "miss_prob": 0.95}],
+  "utility": {"class":  "ModelLossUtility", "model":  "tasksource", "multiplier": 3.0},
+  "selector": {"class": "IndependentSelector", "target_radius": 0.35, "source_radius": 0.4, "label_cert_weight": 100.0},
+  "ft_batchsize": 2,
+  "ft_epochs": 1,
+  "ft_lr": 1e-5,
+  "eval_model": ["tasksource"],
+  "num_iters": 2,
+  "n_select": 4,
+  "skip_init_eval": true,
+  "persistent_model": true,
+  "evidences": -1,
+  "mutation_cache": true,
+  "do_final_eval": true,
+  "restart": false
+}

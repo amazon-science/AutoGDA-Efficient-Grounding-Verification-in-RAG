@@ -1,0 +1,5 @@
+[ {"name": "target_radius_ratio", "floatrange": [0.4, 0.6, 0.8, 1.0, 1.2]},
+  {"name": "source_radius", "options": [0.07, 0.1, 0.15, 0.2, 0.25, 0.4, 0.6]},
+  {"name": "label_cert_weight", "logrange": [1e-2, 1e3]},
+  {"name": "loss_util_weight", "logrange": [1e-1, 1e4]}
+]
