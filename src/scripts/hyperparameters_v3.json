@@ -1,0 +1,4 @@
+[ {"name": "rmiss_model", "options": ["tasksource", "bart-large", "vectara_v2"]},
+  {"name": "label_cert_weight", "logrange": [1e-2, 5e3]},
+  {"name": "loss_util_weight", "logrange": [1e-1, 1e2]}
+]

@@ -1,0 +1,14 @@
+[
+  {"target_model_str": "tasksource", "num_epochs": 1, "batch_size": 2, "is_entailment_check": false, "relabel": "vectara_v2", "skip": true},
+  {"target_model_str": "bart-large", "num_epochs": 1, "batch_size": 2, "is_entailment_check": false, "relabel": "vectara_v2", "skip": true},
+  {"target_model_str": "flan-t5-base", "num_epochs": 1, "batch_size": 2, "is_entailment_check": false, "relabel": "alignscore", "skip": true},
+  {"target_model_str": "tasksource", "num_epochs": 1, "batch_size": 2, "is_entailment_check": false, "relabel": "tasksource", "skip": true},
+  {"target_model_str": "bart-large", "num_epochs": 1, "batch_size": 2, "is_entailment_check": false, "relabel": "tasksource", "skip": true},
+  {"target_model_str": "flan-t5-base", "num_epochs": 1, "batch_size": 2, "is_entailment_check": false, "relabel": "tasksource", "skip": true},
+  {"target_model_str": "tasksource", "num_epochs": 1, "batch_size": 2, "is_entailment_check": false, "relabel": "alignscore", "skip": true},
+  {"target_model_str": "bart-large", "num_epochs": 1, "batch_size": 2, "is_entailment_check": false, "relabel": "alignscore", "skip": true},
+  {"target_model_str": "flan-t5-base", "num_epochs": 1, "batch_size": 2, "is_entailment_check": false, "relabel": "alignscore", "skip": true},
+  {"target_model_str": "tasksource", "num_epochs": 1, "batch_size": 2, "is_entailment_check": false, "relabel": "gpt-4o", "skip": false},
+  {"target_model_str": "bart-large", "num_epochs": 1, "batch_size": 2, "is_entailment_check": false, "relabel": "gpt-4o", "skip": false},
+  {"target_model_str": "flan-t5-base", "num_epochs": 1, "batch_size": 2, "is_entailment_check": false, "relabel": "gpt-4o", "skip": false}
+]

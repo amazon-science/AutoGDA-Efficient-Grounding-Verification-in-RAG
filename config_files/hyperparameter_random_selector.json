@@ -1,0 +1,27 @@
+{
+  "initial_generators": [{"class":  "FromFile", "type": "ClaudeFewShot", "path": "sync_data", "n_per_evidence": 4, "active": true, "select_max_cert":  false, "entail_model": "vectara_v2"}],
+  "inloop_generators": [],
+  "mutations":
+    [{"class":  "LLMFillInTheGapsMutation" ,"n_mutations": 3, "model_name": "claude3-haiku", "batch_size": 10,
+      "temperature": 1.0, "mask_output_perc": 0.2, "connected": true, "n_multiply": 2, "n_threads": 4,
+      "preserve_meaning": true, "entail_model": "vectara_v2", "active": true, "miss_prob": 0.2},
+      {"class": "RephraseMutation" ,"n_mutations": 3, "entail_model": "vectara_v2", "active": true, "miss_prob":  0.2},
+      {"class": "DropSentenceMutation",  "n_mutations": 3, "miss_prob": 0.2, "entail_model": "vectara_v2",
+        "active": true}
+    ],
+  "selector": {"class": "RandomSelector"},
+  "ft_batchsize": 2,
+  "ft_epochs": 1,
+  "ft_lr": 1e-5,
+  "ft_weighted": false,
+  "eval_model": ["tasksource"],
+  "num_iters": 2,
+  "n_select": 4,
+  "skip_init_eval": true,
+  "persistent_model": false,
+  "evidences": -1,
+  "mutation_cache": true,
+  "do_final_eval": true,
+  "restart": true,
+  "single_rmiss": true
+}
