@@ -22,7 +22,7 @@ torchvision = "^0.17.1"
 sentence-transformers = "^2.5.1"
 s3fs = {extras = ["boto3"], version = ">=2023.12.0"}
 faiss-cpu = "^1.8.0"
-nltk = "^3.8.1"
+nltk = "^3.9.1"
 openai = "^1.35.1"
 numpy = "^1.26.4"
 optuna = "^4.0.0"
