@@ -2,7 +2,7 @@ accelerate==0.32.1
 boto3==1.34.160
 datasets==2.19.2
 en-core-web-sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl#sha256=86cc141f63942d4b2c5fcee06630fd6f904788d2f0ab005cce45aadb8fb73889
-evaluate==0.4.2
+evaluate==0.4.0
 gensim==4.3.3
 huggingface-hub==0.23.3
 httpx==0.27.2
@@ -29,5 +29,6 @@ sentence-transformers==2.7.0
 sentencepiece==0.2.0
 spacy==3.7.5
 s3fs==2024.3.1
+transformers=4.45.0
 torch==1.13.1
 tqdm==4.66.4

@@ -553,7 +553,7 @@ class NLIFinetuningEvaluation():
             if self.target_model_str == "vectara_v2":
                 data_collator = Vectara2DataCollatorWithTokenization(tok=self.tokenizer, prompt=self.model.config.prompt)
             else:
-             # "Common" AutoModels
+            # "Common" AutoModels
                 data_collator = DataCollatorWithTokenization(tok=self.tokenizer)
 
             training_args = TrainingArguments(output_dir=".", learning_rate=self.learning_rate, eval_steps=-1,

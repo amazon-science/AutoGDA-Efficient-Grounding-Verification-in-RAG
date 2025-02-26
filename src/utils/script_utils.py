@@ -4,7 +4,7 @@ import selectors
 from src.sync_data.population import Population
 import numpy as np
 import torch
-from src.utils.data_utils import (get_ragtruth_dataset, get_expertqa_data, get_summedit_group_dataset, get_lfqa_verification)
+from src.utils.data_utils import (get_ragtruth_dataset, get_summedit_group_dataset, get_lfqa_verification)
 
 from contextlib import contextmanager
 import sys, os
