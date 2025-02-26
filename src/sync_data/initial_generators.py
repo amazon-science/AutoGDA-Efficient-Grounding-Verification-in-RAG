@@ -15,7 +15,7 @@ from src.utils.constants import _BUCKET_NAME, _BUCKET_ROOTPATH
 ## Synthetic data generators. Should be called with dataset after query integration.
 class FewShotPromptingGenerator:
     def __init__(self, entailment_scoring_model: EntailmentCheckModel, model_name="claude3-haiku", min_req_examples=2,
-                 prompt_mode = "summ", openai_key_loc="data/openai-tobias-project.json", dataset=None, group=None):
+                 prompt_mode = "summ", openai_key_loc="data/openai.json", dataset=None, group=None):
         """ prompt_mode: summ (for summaries) or qa for QA datasets. """
         self.entailment_scoring_model = entailment_scoring_model
         self.model_name = model_name
@@ -26,7 +26,7 @@ class FewShotPromptingGenerator:
         if openai_key_loc is not None:
             oai_credentials = json.load(open(openai_key_loc))
             os.environ["OPENAI_API_KEY"] = oai_credentials["key"]
-
+            
     def generate_samples(self, dataset_unsupervised: AnnotatedTextDataset, samples_per_evidence=4):
         """ Generate synthetic samples for each evidence using few shot prompting. """
         print("Generating samples...")

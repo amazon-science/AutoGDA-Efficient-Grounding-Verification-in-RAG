@@ -26,5 +26,6 @@
   "mutation_cache": true,
   "do_final_eval": false,
   "restart": false,
-  "single_rmiss": false
+  "single_rmiss": false,
+  "open_ai_key_file": "data/openai.json"
 }

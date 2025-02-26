@@ -14,8 +14,7 @@ from tqdm import tqdm
 from src.utils.s3 import upload_csv_to_s3
 from src.utils.global_variables import _BUCKET_NAME
 from src.utils.bedrock_utils import get_bedrock_batch_response
-from src.utils.data_utils import get_summedit_group_dataset
-from src.utils.lfrqa import get_lfrqa_data
+from src.utils.script_utils import get_datasets
 
 def generate_prompt_request(system_prompt: str, documents: List[str]) -> List[str]:
     """
@@ -167,7 +166,7 @@ def few_shot_prompting(df_org, n_generate=6, n_few_shot=3, batch_size=5, model_n
         model_id = "anthropic.claude-3-5-sonnet-20240620-v1:0"
     elif model_name == 'claude3-haiku':
         model_id = "anthropic.claude-3-haiku-20240307-v1:0"
-    elif model_name in ["gpt-3.5-turbo", "gpt-4-turbo", "gpt-4o-turbo"]:
+    elif model_name in ["gpt-3.5-turbo", "gpt-4-mini", "gpt-4o-mini"]:
         model_id = model_name
     else:
         raise ValueError(f"Unknown model name: {model_name}.")
@@ -278,6 +277,8 @@ if __name__ == "__main__":
     # parser.add_argument('-p', '--prompt_name', choices=list(PROMPTS.keys()), default='base_prompt')
     parser.add_argument('-r', '--region_name', choices=['us-east-1', 'us-east-2', 'us-west-1'], default='us-east-1')
     parser.add_argument('-d', '--dataset', type=str, default="ragtruth")
+    parser.add_argument('-g', '--group', choices=["Summary", "QA"], default="QA")
+    parser.add_argument('-s', '--split', choices=["train", "test", "val"], default="train")
     parser.add_argument('--n_generate', type=int, default=16, help="number of examples to generate per evidence")
 
     args = parser.parse_args()
@@ -294,21 +295,11 @@ if __name__ == "__main__":
     # --------------- #
     # Load base data
     # --------------- #
-    dataset_name = args.dataset
-    if dataset_name == 'ragtruth':
-        dataset_name =  'Salesforce/summedits/full'
-    elif 'summedits' in dataset_name:
-        parts = dataset_name.split("-")
-        print("loading summedits", parts[1])
-        dataset = get_summedit_group_dataset(group=parts[1], subset="train", stratified=True, filter_length=True)
-        # = get_summedit_group_dataset
-    elif 'lfrqa' in dataset_name:
-        parts = dataset_name.split("-")
-        print("loading lfrqa", parts[1])
-        dataset = get_lfrqa_data(split="train", group=parts[1], filter_length=True, filter_model_str = "tasksource/deberta-base-long-nli", length_limit=1280, share_train=0.8)
-    df = dataset.df
-
-    # print('Number of premises: ', len(df))
+    dtrain, dtest, dval  = get_datasets(args.dataset, args.group)
+    ddict = {"train": dtrain, "test": dtest, "val": dval}
+    df = ddict[args.split].df
+    os.makedirs("sync_data", exist_ok=True)
+    print('Number of premises: ', len(df))
 
     #for g in df['group'].unique():
     #    df_temp = df[df['group'] == g]
@@ -319,7 +310,7 @@ if __name__ == "__main__":
     #    path = f'sync_data/summedits-sync-{g}.csv'
     #    print(f'Saving {path}')
     #    upload_csv_to_s3(sync_df, _BUCKET_NAME, path)
-    sync_df = few_shot_prompting(df, n_generate=args.n_generate, n_few_shot=3, batch_size=4, model_name=model_id)
+    sync_df = few_shot_prompting(df, n_generate=args.n_generate, n_few_shot=3, batch_size=4, model_name=model_id, mode="summ" if args.group=="Summary" else "qa2")
     path = f'sync_data/d16_{dataset_name.replace("/", "-")}.csv'
     sync_df.to_csv(path, index=False)
     upload_csv_to_s3(sync_df, _BUCKET_NAME, path)

@@ -79,6 +79,12 @@ def run_from_config(config, dataset: str, group: tp.Union[str, list[str]], run: 
     """ Run the actual algorithm. All parameters besides dataset / group should be contained in the config argument.
         see config_files/base_config.json for an example.
     """
+    
+    ## Init OpenAI Keys
+    if "open_ai_key_file" in config: 
+        oai_credentials = json.load(open(config["open_ai_key_file"]))
+        os.environ["OPENAI_API_KEY"] = oai_credentials["key"]
+
     ## Initialize and obtain processed datasets
     data_train, data_test, data_val = get_datasets(dataset, group)
 
