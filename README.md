@@ -78,6 +78,20 @@ GRANT ALL ON optuna.* TO optuna@"%";
 ## Details on experiments and files in the repository:
 Please confer ```experiment_reproduction.md``` for details on how to use the method and to run experiments.
 
+# Reference
+Please cite our work if you use this codebase, for instance using the following BibTeX-Entry:
+
+```
+@inproceedings{
+leemann2025autogda,
+title={Auto-{GDA}: Automatic Domain Adaptation for Efficient Grounding Verification in Retrieval Augmented Generation},
+author={Tobias Leemann and Periklis Petridis and Giuseppe Vietri and Dionysis Manousakas and Aaron Roth and Sergul Aydore},
+booktitle={The Thirteenth International Conference on Learning Representations},
+year={2025},
+url={https://openreview.net/forum?id=w5ZtXOzMeJ}
+}
+```
+
 # License
 
 This project is licensed under the Apache-2.0 License.
