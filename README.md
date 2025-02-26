@@ -73,10 +73,15 @@ GRANT ALL ON optuna.* TO optuna@"%";
 
 **LLM APIs.** For using the LLM APIs either make sure you have valid credentials for Amazon Bedrock in your ```~/.aws``` folder or set the OpenAI key in ```data/openai.json```.
 
-## Quickstart
+### Quickstart
+We provide a simple example for running Auto-GDA on the LFQA-Verification dataset.
+We recommend first generating the initial data using the notebook ```notebooks/GenerateSync.ipynb```. Second you can just launch a run of Auto-GDA by running
+```
+export PYTHONPATH="."; python3 ./src/sync_data/generation_loop.py config_files/simple_config.json -d lfqa-veri -g all
+```
 
-## Details on experiments and files in the repository:
-Please confer ```experiment_reproduction.md``` for details on how to use the method and to run experiments.
+### Additional Details
+Please confer ```experiment_reproduction.md``` for additional etails on how to use the method and to run experiments.
 
 # Reference
 Please cite our work if you use this codebase, for instance using the following BibTeX-Entry:
