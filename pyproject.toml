@@ -35,6 +35,11 @@ seaborn ="*"
 sentence-transformers = "^2.5.1"
 s3fs = {extras = ["boto3"], version = ">=2023.12.0"}
 faiss-cpu = "^1.8.0"
+<<<<<<< HEAD
+=======
+nltk = "^3.9.1"
+openai = "^1.35.1"
+>>>>>>> dependabot/pip/nltk-3.9.1
 numpy = "^1.26.4"
 
 [tool.poetry.group.dev.dependencies]
