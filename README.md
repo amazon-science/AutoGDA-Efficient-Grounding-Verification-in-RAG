@@ -54,6 +54,10 @@ Then install die remaining requirements using pip (preferred) or poetry
 pip install -r requirements.txt
 ```
 
+Optionally, activate the enviorment for usage with Jupyter by running
+```
+python -m ipykernel install --user --name autogda
+```
 ## Setting up the MySQL-DB for hyperparameter search
 Install mysql server via apt get as described above. Then log into the mysql console:
 ```sudo mysql -u root```
@@ -65,9 +69,9 @@ GRANT ALL ON optuna.* TO optuna@"%";
 ```
 
 # Usage
-First, download the datasets by exectuing the script ```./src/scripts/download_datasets.sh``` from the main directory as working directory.
+**Datasets.** First, download the datasets by exectuing the script ```./src/scripts/download_datasets.sh``` from the main directory as working directory.
 
-For using the LLM APIs either make sure you have valid credentials for Amazon Bedrock in your ```~/.aws``` folder or set the OpenAI key in ````data/openai.json```.
+**LLM APIs.** For using the LLM APIs either make sure you have valid credentials for Amazon Bedrock in your ```~/.aws``` folder or set the OpenAI key in ```data/openai.json```.
 
 ## Quickstart
 
