@@ -94,7 +94,6 @@ class Population():
 
     def __add__(self, other):
         """ Join two populations. """
-        print("join")
         for t in other.tags:
             if t in self.target_population:
                 self.target_population[t] = np.concatenate((

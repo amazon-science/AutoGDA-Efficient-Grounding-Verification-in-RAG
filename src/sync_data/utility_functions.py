@@ -5,6 +5,7 @@ import torch
 from src.sync_data.compute_entailments import EntailmentCheckModel
 from typing import Union
 from tqdm import tqdm
+
 class ModelLossUtility:
     """ Assigns points that have high loss a high utility. """
     def __init__(self, model: Union[EntailmentCheckModel, str] = "tasksource", multiplier=1.0):

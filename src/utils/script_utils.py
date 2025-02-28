@@ -4,7 +4,7 @@ import selectors
 from src.sync_data.population import Population
 import numpy as np
 import torch
-from src.utils.data_utils import (get_ragtruth_dataset, get_expertqa_data, get_summedit_group_dataset, get_lfqa_verification)
+from src.utils.data_utils import (get_ragtruth_dataset, get_summedit_group_dataset, get_lfqa_verification)
 
 from contextlib import contextmanager
 import sys, os
@@ -44,13 +44,6 @@ def get_datasets(base_dataset = "ragtruth", group="Summary", filter_model_str="f
                                           filter_model_str=filter_model_str, length_limit=length_limit)
         data_val = get_summedit_group_dataset(subset="val", group=group_use, filter_length=True,
                                                 filter_model_str=filter_model_str, length_limit=length_limit)
-    elif base_dataset == "expertqa":
-        data_test = get_expertqa_data(subset="test", group=group, filter_length=True,
-                                       filter_model_str=filter_model_str, length_limit=length_limit)
-        data_train = get_expertqa_data(subset="train", group=group, filter_length=True,
-                                        filter_model_str=filter_model_str, length_limit=length_limit)
-        data_val = get_expertqa_data(subset="val", group=group, filter_length=True,
-                                        filter_model_str=filter_model_str, length_limit=length_limit)
     elif base_dataset == "lfqa-veri":
         data_test = get_lfqa_verification(split="test", group="all", filter_length=True,
                                       filter_model_str=filter_model_str, length_limit=length_limit)

@@ -345,10 +345,7 @@ def get_ragtruth_dataset(split="train", group=None, filter_length=False, task="S
 
 def get_validation_evidence_size(base_dataset, group):
     """ Get the number of evidences to use in a reasonable validation dataset (eg. ca. 100 labeled examples in total). """
-    dict_vals = {("ragtruth", "QA"): 24, ("ragtruth", "Summary"): 24, ("expertqa", "Healthcare"): 50,
-                 ("expertqa", "Law"): 30, ("expertqa", "Education"): 30, ("summedits", "all"): 120,
-                 ("expertqa", "Architecture"): 20, ("expertqa", "Chemistry"): 20,  ("expertqa", "Business"): 20,
-                 ("expertqa", "Engineering"): 20, ("expertqa", "Psychology"): 20, ("expertqa", "VisualArts"): 20,
+    dict_vals = {("ragtruth", "QA"): 24, ("ragtruth", "Summary"): 24, ("summedits", "all"): 120,
                  ("lfqa-veri", "all"): 50}
     if isinstance(group, str):
         group = [group]
@@ -362,102 +359,6 @@ def get_validation_evidence_size(base_dataset, group):
         return None
     else:
         return sum(group_sz)
-
-def get_expertqa_data(group: str=None, subset: str = "train", file_path = "data/expertQA/r2_compiled_anon.jsonl",
-                      share_train=0.65, filter_length=True, filter_model_str="tasksource/deberta-base-long-nli", length_limit=1280):
-    with open(file_path, 'r') as f:
-        dictlist = list([json.loads(line) for line in f])
-    expert_qa_data = pd.DataFrame(dictlist)
-    expert_qa_data = expert_qa_data.sample(frac=1, random_state=1)
-
-    def unroll_claims(row):
-        ret_df = pd.concat([pd.DataFrame(row["answers"][k]["claims"]).assign(model=k) for k in row["answers"].keys()],
-                           axis=0, ignore_index=True)
-        ret_df["model"] = row["metadata"]["field"]
-        ret_df["query"] = row["question"]
-        return ret_df
-
-    all_claims = pd.concat([unroll_claims(row) for _, row in expert_qa_data.iterrows()], ignore_index=True)
-    all_claims = all_claims[all_claims.support.isin(["Complete", "Incomplete"])]
-
-    ## Filter only claims with textual evidence
-    def filter_evidence(input_row):
-        ret = ""
-        for k in input_row:
-            parts = k.split("\n")
-            if len(parts) > 1:
-                ret += (" ".join(parts[1:])).strip(" ")
-        # Filter citations in square brackets, e.g. [3]
-        return ret
-
-    def filter_claim(ret):
-        while "[" in ret:
-            len_del = 1
-            loc = ret.index('[')
-            loc2 = ret.index(']', loc)
-            if loc2 > 0 and loc2 - loc <= 3:
-                len_del = loc2 - loc
-            if loc > 0 and ret[loc - 1] == " ":
-                loc = loc - 1
-                len_del = len_del + 1
-            ret = ret[:loc] + ret[loc + len_del + 1:]
-        return ret
-    all_claims["evidence_rev"] = all_claims["evidence"].apply(filter_evidence) # join evidence pieces.
-    all_claims.drop(["evidence", "reason_missing_support", "source_reliability", "revised_claim_string",
-                     "informativeness", "worthiness", "correctness", "revised_claim", "revised_evidence", "reliability"], axis=1, inplace=True)
-    all_claims = all_claims[all_claims["evidence_rev"] != ""] ## Need evidence, drop all that do not have evidence.
-
-
-    all_claims["claim_string"] = all_claims["claim_string"].apply(filter_claim)
-    all_claims["id"] = np.arange(len(all_claims))
-
-    if group is not None:
-        group_mappings = {"Healthcare": "Healthcare / Medicine", "Engineering": "Engineering and Technology", "VisualArts": "Visual Arts"}
-        if isinstance(group, str):
-            if group in group_mappings:
-                group_use = group_mappings[group]
-            else:
-                group_use = group
-            all_claims = all_claims[all_claims["model"] == group_use]
-        elif isinstance(group, list):
-            group_use = list([group_mappings[g] if g in group_mappings else g for g in group])
-            all_claims = all_claims[all_claims["model"].isin(group_use)]
-
-    all_claims['label'] = all_claims['support'].map({"Complete": "ENTAILMENT", "Incomplete": "NEUTRAL"})
-    all_claims['label_binary'] = (all_claims['label']  == "ENTAILMENT")
-    all_claims.rename(columns={
-        'claim_string': 'claim',
-        'prompt': 'query',
-        'evidence_rev': 'evidence',
-        'model': 'group'},
-        inplace=True)
-    data_id = "expertqa"
-    if group is not None:
-        data_id += ("-" + str(group))
-    if subset is not None:
-        data_id += ("/" + subset)
-
-    all_claims = _perform_query_integration(all_claims, mode="prepend")
-    claims_list = list(all_claims["claim"])
-    n_train = int(len(all_claims) * share_train)
-    print(n_train)
-    claims_list_train = claims_list[:n_train]
-    if subset == "test":
-        all_claims = all_claims[~all_claims["claim"].isin(claims_list_train)]
-    else:
-        all_claims = all_claims[all_claims["claim"].isin(claims_list_train)]
-        # Split in val and train
-        n_val = get_validation_evidence_size("expertqa", group)
-        claims_list_val = claims_list[:n_val]
-        if subset == "val":
-            all_claims = all_claims[all_claims["claim"].isin(claims_list_val)]
-        else: # subset == "train":
-            all_claims = all_claims[~all_claims["claim"].isin(claims_list_val)]
-
-    if filter_length:
-        all_claims = filter_dataframe_by_length(all_claims, filter_model_str, length_limit)
-
-    return AnnotatedTextDataset(all_claims, data_id=data_id)
 
 def get_binary_label(annotation):
     numeric_dict = {"supported": 1, "partially": 0, "not_supported": -1}
