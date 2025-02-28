@@ -36,7 +36,8 @@ see ```.\src\scripts\run_multiple_seeds_selfsupervised.sh ```, which additionall
 ## Computing Baselines
 
 **Installing Alignscore**
-If you want to use AlignScore, follow the instructions in their (https://github.com/yuh-zha/AlignScore)[Github repository] to clone the repo and run 
+
+If you want to use AlignScore, follow the instructions in their [Github repository](https://github.com/yuh-zha/AlignScore) to clone the repo and run 
 ```
 pip install .
 ```
@@ -46,6 +47,7 @@ Then download the models in this repository using
 ./src/scripts/download_alignscores.sh
 ```
 **Evaluating baselines**
+
 The performance of the baselines can be evaluated using the script
 ```export PYTHONPATH="."; python3 ./src/scripts/compute_baselines.py -c <baseline_config_file> -d <dataset> -g <group> --split <val or test>```
 where the config file specifies which baselines are used and their corresponding parameters.
