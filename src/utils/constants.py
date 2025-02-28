@@ -1,5 +1,5 @@
-_BUCKET_NAME = "plato-science-interns-2024"
-_BUCKET_ROOTPATH ="tleemann"
+_BUCKET_NAME = "insert-aws-bucket-here"
+_BUCKET_ROOTPATH ="autogda"
 
 NLI_LABELS = {"contradiction": 0, "entailment": 1, "neutral": 2}
 

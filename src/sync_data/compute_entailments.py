@@ -5,7 +5,6 @@ from sentence_transformers import CrossEncoder
 from src.cross_encoder_model.model_wrappers import TwoWayDebertaV2, TwoWayBart, OneWayCrossEncoder, DataCollatorWithTokenization, TwoWayT5
 import os
 from src.llm_entailment_scores.llm_alignment_scores import get_scores, BINARY_PROMPT, SELFCHECK_PROMPT, MINICHECK_PROMPT
-from src.cross_encoder_model.bedrock_guardrail import Guardrail
 from typing import List, Tuple, Dict
 import torch
 from tqdm import tqdm
@@ -104,8 +103,6 @@ class EntailmentCheckModel:
                 self.model_id = "meta.llama3-70b-instruct-v1:0"
         elif self.model_name_str in ["gpt-3.5-turbo", "gpt-4o-mini", "gpt-4o", "gpt-4-turbo"]:
             self.model = OpenAImodel(self.model_name_str)
-        elif self.model_name_str == "guardrails":
-            self.model = Guardrail()
         elif self.model_name_str == "minicheck-t5":
             self.model = MiniCheck(model_name='flan-t5-large')
         elif self.model_name_str == "alignscore-large" or self.model_name_str == "alignscore":
@@ -192,8 +189,6 @@ class EntailmentCheckModel:
                                            num_tries = 3, zero_one_prompt=True))
             return np.concatenate([s["scores"] for s in ret_list], axis=0)
         elif self.model_name_str in  ["gpt-3.5-turbo", "gpt-4o-mini", "gpt-4o", "gpt-4-turbo"]:
-            return self.model.predict(sentence_pairs)
-        elif self.model_name_str == "guardrails":
             return self.model.predict(sentence_pairs)
         elif self.model_name_str in ["vectara_v1", "nli-deberta-v3-base"]:
             res = self.model.predict(sentence_pairs, convert_to_numpy=True, show_progress_bar=False, batch_size=self.batch_size)

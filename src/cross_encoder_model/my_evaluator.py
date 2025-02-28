@@ -11,7 +11,7 @@ import torch.nn.functional as F
 from sklearn.metrics import accuracy_score, RocCurveDisplay, roc_curve, auc, roc_auc_score, balanced_accuracy_score
 from sklearn.metrics import average_precision_score
 from sentence_transformers.evaluation import BinaryClassificationEvaluator
-from src.utils.global_variables import COLOR, _BUCKET_NAME
+from src.utils.constants import COLOR, _BUCKET_NAME
 from src.utils.model_s3_utils import upload_saved_model_to_s3
 from sentence_transformers import CrossEncoder
 from tqdm import tqdm

@@ -12,7 +12,7 @@ import numpy as np
 from tqdm import tqdm
 
 from src.utils.s3 import upload_csv_to_s3
-from src.utils.global_variables import _BUCKET_NAME
+from src.utils.constants import _BUCKET_NAME
 from src.utils.bedrock_utils import get_bedrock_batch_response
 from src.utils.script_utils import get_datasets
 

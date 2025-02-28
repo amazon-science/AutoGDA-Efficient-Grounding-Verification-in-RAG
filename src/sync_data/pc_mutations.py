@@ -139,6 +139,8 @@ class APIModelPCMutation(ProbCorrectMutation):
             self.model_id = "anthropic.claude-3-sonnet-20240229-v1:0"
         elif model_name == 'claude3-haiku':
             self.model_id = "anthropic.claude-3-haiku-20240307-v1:0"
+        elif model_name in ["gpt-4o", "gpt-4o-mini", "gpt-3.5-turbo"]:
+            self.model_id = model_name
         else:
             raise ValueError(f"Unrecognized model name: {model_name}")
 

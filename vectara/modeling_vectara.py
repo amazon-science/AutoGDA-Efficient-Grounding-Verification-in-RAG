@@ -1,3 +1,5 @@
+# Code from https://huggingface.co/vectara/hallucination_evaluation_model/blob/main/modeling_hhem_v2.py to allow finetuning the model.
+
 import torch
 
 # from peft import PeftModel
@@ -54,12 +56,6 @@ class HHEMv2ForSequenceClassification(PreTrainedModel):
         This method should only be called by Vectara employee who prepares the model for publishing. Users do not need to call this method.
         """
         self.t5 = model
-
-    # TODO: Figure out how to publish only the adapter yet still able to do end-to-end pulling and inference.
-    # def populate_lora(self, checkpoint: str):
-    #     base_model = AutoModelForTokenClassification.from_pretrained(self.config.foundation)
-    #     combined_model = PeftModel.from_pretrained(base_model, checkpoint, is_trainable=False)
-    #     self.t5 = combined_model
 
     def forward(self, **kwargs):  # To cope with `text-classiication` pipeline
         self.t5.eval()
