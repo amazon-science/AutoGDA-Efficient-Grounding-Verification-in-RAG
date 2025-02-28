@@ -6,7 +6,7 @@ It can be used to generate high-quality synthetic NLI data, which is useful for 
 
 Please refer to our paper
 
-[Auto-GDA: Automatic Domain Adaptation for Efficient Grounding Verification in Retrieval Augmented Generation](https://openreview.net/forum?id=w5ZtXOzMeJ) 
+[Auto-GDA: Automatic Domain Adaptation for Efficient Grounding Verification in Retrieval-augmented Generation](https://openreview.net/forum?id=w5ZtXOzMeJ) 
 by Tobias Leemann, Periklis Petridis, Giuseppe Vietri, Dionysis Manousakas, Aaron Roth, and Sergul Aydore
 
 for more details about the method.
@@ -94,7 +94,7 @@ Please cite our work if you use this codebase, for instance using the following 
 ```
 @inproceedings{
 leemann2025autogda,
-title={Auto-{GDA}: Automatic Domain Adaptation for Efficient Grounding Verification in Retrieval Augmented Generation},
+title={Auto-{GDA}: Automatic Domain Adaptation for Efficient Grounding Verification in Retrieval-augmented Generation},
 author={Tobias Leemann and Periklis Petridis and Giuseppe Vietri and Dionysis Manousakas and Aaron Roth and Sergul Aydore},
 booktitle={The Thirteenth International Conference on Learning Representations},
 year={2025},
